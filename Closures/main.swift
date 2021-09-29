@@ -38,3 +38,9 @@ print(someArray1.sorted(by: { a, b in return a > b }))
 print("\n//Неявные возвращаемые значения из замыканий с одним выражением")
 
 print(someArray1.sorted(by: { a, b in a > b }))
+
+
+//MARK: Сокращенные имена параметров
+print("\n//Сокращенные имена параметров")
+
+print(someArray1.sorted(by: { $0 > $1 }))
