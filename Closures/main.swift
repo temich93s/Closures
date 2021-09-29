@@ -44,3 +44,9 @@ print(someArray1.sorted(by: { a, b in a > b }))
 print("\n//Сокращенные имена параметров")
 
 print(someArray1.sorted(by: { $0 > $1 }))
+
+
+//MARK: Операторные функции
+print("\n//Операторные функции")
+
+print(someArray1.sorted(by: >))
