@@ -9,3 +9,14 @@ import Foundation
 
 print("Hello, World!")
 
+
+//MARK: Метод sorted
+print("\n//Метод sorted")
+
+let someArray1 = ["q", "w", "e", "r", "t", "y", "u", "i"]
+
+func someFunc1(_ a: String, _ b: String) -> (Bool) {
+    return a > b
+}
+
+print(someArray1.sorted(by: someFunc1))
