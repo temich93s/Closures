@@ -32,3 +32,9 @@ print(someArray1.sorted(by: {(a: String, b: String) -> Bool in return a > b }))
 print("\n//Определение типа из контекста")
 
 print(someArray1.sorted(by: { a, b in return a > b }))
+
+
+//MARK: Неявные возвращаемые значения из замыканий с одним выражением
+print("\n//Неявные возвращаемые значения из замыканий с одним выражением")
+
+print(someArray1.sorted(by: { a, b in a > b }))
