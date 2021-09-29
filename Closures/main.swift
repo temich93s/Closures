@@ -26,3 +26,9 @@ print(someArray1.sorted(by: someFunc1))
 print("\n//Синтаксис замыкающего выражения")
 
 print(someArray1.sorted(by: {(a: String, b: String) -> Bool in return a > b }))
+
+
+//MARK: Определение типа из контекста
+print("\n//Определение типа из контекста")
+
+print(someArray1.sorted(by: { a, b in return a > b }))
