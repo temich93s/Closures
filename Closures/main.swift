@@ -50,3 +50,37 @@ print(someArray1.sorted(by: { $0 > $1 }))
 print("\n//Операторные функции")
 
 print(someArray1.sorted(by: >))
+
+
+//MARK: Последующее замыкание
+print("\n//Последующее замыкание")
+
+print(someArray1.sorted(by:) { $0 > $1 })
+print(someArray1.sorted { $0 > $1 })
+
+let someArray2 = ["zero", "one"]
+let someArray3 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+print(someArray3)
+
+let someArray4 = someArray3.map { (number) -> String in
+    if 0 == number {
+        return someArray2[0]
+    } else {
+        return someArray2[1]
+    }
+}
+
+print(someArray4)
+
+func someFunc2(someBool: Bool, chooseTrue: () -> Void, chooseFalse: () -> Void) {
+    someBool ? chooseTrue() : chooseFalse()
+}
+
+someFunc2(someBool: true, chooseTrue: { () -> Void in print("chooseTrue")}, chooseFalse: { () -> Void in print("chooseFalse")})
+someFunc2(someBool: false, chooseTrue: { () -> Void in print("chooseTrue")}, chooseFalse: { () -> Void in print("chooseFalse")})
+
+someFunc2(someBool: false) {
+    print("chooseTrue")
+} chooseFalse: {
+    print("chooseFalse")
+}
