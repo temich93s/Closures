@@ -84,3 +84,67 @@ someFunc2(someBool: false) {
 } chooseFalse: {
     print("chooseFalse")
 }
+
+//MARK: Захват значений
+print("\n//Захват значений")
+
+func makeIncrement(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
+}
+
+let incrementByTen = makeIncrement(forIncrement: 10)
+
+print(incrementByTen())
+print(incrementByTen())
+
+let incrementBySeven = makeIncrement(forIncrement: 7)
+
+print(incrementByTen())
+print(incrementBySeven())
+print(incrementBySeven())
+print(incrementByTen())
+print(incrementBySeven())
+
+
+//MARK: Замыкания - ссылочный тип
+print("\n//Замыкания - ссылочный тип")
+
+print(incrementByTen())
+let alsoIncrementbyTen = incrementByTen
+print(alsoIncrementbyTen())
+
+
+//MARK: Сбегающие замыкания
+print("\n//Сбегающие замыкания")
+
+var completionHandlers: [() -> Void] = []
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+  completionHandlers.append(completionHandler)
+}
+
+func someFunctionWithNonescapingClosure(closure: () -> Void) {
+    closure()
+}
+ 
+class SomeClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure { self.x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+}
+ 
+let instance = SomeClass()
+
+instance.doSomething()
+print(instance.x)
+// Выведет "200"
+ 
+completionHandlers.first?()
+print(instance.x)
+// Выведет "100"
