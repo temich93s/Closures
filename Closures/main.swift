@@ -155,7 +155,7 @@ print(instance.x)
 var completionHandlers2: [() -> Void] = []
 
 func someFunctionWithEscapingClosure2(completionHandler: @escaping () -> Void) {
-  completionHandlers2.append(completionHandler)
+    completionHandlers2.append(completionHandler)
 }
 
 func someFunctionWithNonescapingClosure2(closure: () -> Void) {
@@ -178,3 +178,51 @@ print(instance2.x)
 completionHandlers2.first?()
 print(instance2.x)
 // Выведет "100"
+
+
+//MARK: Автозамыкания (autoclosures)
+print("\n//Автозамыкания (autoclosures)")
+
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count)
+// Выведет "5"
+ 
+let customerProvider = { customersInLine.remove(at: 0) }
+print(customersInLine.count)
+// Выведет "5"
+ 
+print("Now serving \(customerProvider())!")
+// Выведет "Now serving Chris!"
+print(customersInLine.count)
+// Выведет "4"
+
+// customersInLine равен ["Alex", "Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serve(customer: { customersInLine.remove(at: 0) } )
+// Выведет "Now serving Alex!"
+
+// customersInLine равен ["Ewa", "Barry", "Daniella"]
+func serve(customer customerProvider: @autoclosure () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+serve(customer: customersInLine.remove(at: 0))
+// Выведет "Now serving Ewa!"
+
+
+// customersInLine равен ["Barry", "Daniella"]
+var customerProviders: [() -> String] = []
+func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customersInLine.remove(at: 0))
+collectCustomerProviders(customersInLine.remove(at: 0))
+ 
+print("Collected \(customerProviders.count) closures.")
+// Выведет "Collected 2 closures."
+for customerProvider in customerProviders {
+    print("Now serving \(customerProvider())!")
+}
+// Выведет "Now serving Barry!"
+// Выведет "Now serving Daniella!"
