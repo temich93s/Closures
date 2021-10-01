@@ -123,6 +123,7 @@ print(alsoIncrementbyTen())
 print("\n//Сбегающие замыкания")
 
 var completionHandlers: [() -> Void] = []
+
 func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
   completionHandlers.append(completionHandler)
 }
@@ -147,4 +148,33 @@ print(instance.x)
  
 completionHandlers.first?()
 print(instance.x)
+// Выведет "100"
+
+//----------
+
+var completionHandlers2: [() -> Void] = []
+
+func someFunctionWithEscapingClosure2(completionHandler: @escaping () -> Void) {
+  completionHandlers2.append(completionHandler)
+}
+
+func someFunctionWithNonescapingClosure2(closure: () -> Void) {
+    closure()
+}
+
+class SomeOtherClass {
+    var x = 10
+    func doSomething() {
+        someFunctionWithEscapingClosure2 { [self] in x = 100 }
+        someFunctionWithNonescapingClosure2 { x = 200 }
+    }
+}
+
+let instance2 = SomeOtherClass()
+instance2.doSomething()
+print(instance2.x)
+// Выведет "200"
+ 
+completionHandlers2.first?()
+print(instance2.x)
 // Выведет "100"
